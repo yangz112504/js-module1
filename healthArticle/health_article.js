@@ -34,8 +34,8 @@ xhr.onload = function(){
             var listItem = document.createElement('li');
             listItem.textContent = benefit;
             benefitsList.appendChild(listItem);
-        })
- articleDiv.appendChild(title);
+        });
+        articleDiv.appendChild(title);
         articleDiv.appendChild(description);
         articleDiv.appendChild(waysHeader);
         articleDiv.appendChild(waysList);
@@ -46,3 +46,37 @@ xhr.onload = function(){
     });
 }
 xhr.send();
+
+var xhrNews = new XMLHttpRequest();
+var urlNews = './news_article.json';
+xhrNews.open('GET', urlNews, true);
+xhrNews.responseType = 'json';
+
+xhrNews.onload = function(){
+    var newsArticles = xhrNews.response.news;
+    var overallNewsDiv = document.getElementById("news");
+    newsArticles.forEach((news)=>{
+        var newsDiv = document.createElement("div");
+        newsDiv.classList.add('news');
+
+        var newsTitle = document.createElement('h2');
+        newsTitle.textContent = news.title;
+
+        var newsAuthor = document.createElement('h3');
+        newsAuthor.textContent = news.author;
+
+        var newsDate = document.createElement('p');
+        newsDate.textContent = news.publishedDate;
+
+        var newsDescription = document.createElement('p');
+        newsDescription.textContent = news.description;
+
+        newsDiv.appendChild(newsTitle);
+        newsDiv.appendChild(newsAuthor);
+        newsDiv.appendChild(newsDate);
+        newsDiv.appendChild(newsDescription);
+
+        overallNewsDiv.appendChild(newsDiv);
+    })
+}
+xhrNews.send();
